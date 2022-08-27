@@ -1,7 +1,7 @@
 import { Box, BoxProps, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 
-export function Header(): JSX.Element {
+export default function Header(): JSX.Element {
   const HeaderContainer = styled('header')<>({
     backgroundColor: 'white',
     width: '100%',

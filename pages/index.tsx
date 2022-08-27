@@ -1,10 +1,10 @@
 import { Grid, GridProps } from '@mui/material';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import Head from 'next/head';
-import { Header } from '../components/header';
+import Header from '../components/header';
 import { styled } from '@mui/system';
 import { loadBatches, loadSims } from '../api';
-import { VSTable } from '../components/table';
+import TableSection from '../section/tableSection';
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const sims = await loadSims();
@@ -45,7 +45,7 @@ const Home: NextPage = ({
       <VSGrid container>
         <Header />
         <Main>
-          <VSTable sims={sims} />
+          <TableSection sims={sims} />
         </Main>
         <footer
           style={{

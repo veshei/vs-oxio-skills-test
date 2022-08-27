@@ -1,7 +1,7 @@
 export async function loadSims(
   pageNumber = 1,
   pageSize = 10,
-  filterSearch?: number
+  filterSearch?: string
 ) {
   // Call an external API endpoint to get sims
   let res;
@@ -37,5 +37,24 @@ export async function loadBatches(
   }
   const data = await res.json();
 
+  return data;
+}
+
+export async function postBatch(batch: {
+  name: string;
+  startIccid: string;
+  startImsi: string;
+  count: number;
+  isActive: boolean;
+}) {
+  const res = await fetch('https://simulator-api.onrender.com/v1/batches', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(batch),
+  });
+  const data = await res.json();
   return data;
 }
