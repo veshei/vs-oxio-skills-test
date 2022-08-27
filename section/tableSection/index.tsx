@@ -6,9 +6,8 @@ import {
   Button,
 } from '@mui/material';
 import { styled } from '@mui/system';
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import { debounce } from 'lodash';
 
 import { loadSims } from '../../api';
 import VSFormDialog from '../../components/formDialog';

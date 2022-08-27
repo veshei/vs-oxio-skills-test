@@ -13,8 +13,6 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { styled } from '@mui/system';
 import { useEffect, useState } from 'react';
 
-import { loadSims } from '../../api';
-
 interface VSTableProps {
   sims: {
     data: {
