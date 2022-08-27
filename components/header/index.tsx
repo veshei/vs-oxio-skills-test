@@ -11,8 +11,6 @@ export function Header(): JSX.Element {
     display: 'flex',
     alignItems: 'center',
     padding: '0rem 2rem',
-    position: 'absolute',
-    top: 0,
   });
   return (
     <HeaderContainer>

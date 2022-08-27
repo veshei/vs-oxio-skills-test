@@ -1,11 +1,10 @@
-import { Box, Grid, GridProps, InputAdornment, TextField } from '@mui/material';
+import { Grid, GridProps } from '@mui/material';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import Head from 'next/head';
 import { Header } from '../components/header';
 import { styled } from '@mui/system';
 import { loadBatches, loadSims } from '../api';
 import { VSTable } from '../components/table';
-import SearchIcon from '@mui/icons-material/Search';
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const sims = await loadSims();
@@ -31,7 +30,7 @@ const Home: NextPage = ({
   const Main = styled(Grid)<GridProps>({
     backgroundColor: 'white',
     width: '100%',
-    padding: '6.5rem 5rem 2.5rem 5rem',
+    padding: '2.5rem 5rem',
     maxWidth: '1440px',
     margin: '0 auto',
     display: 'flex',
@@ -46,19 +45,6 @@ const Home: NextPage = ({
       <VSGrid container>
         <Header />
         <Main>
-          <Box>
-            <TextField
-              label="ICCID or IMSI"
-              variant="outlined"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
           <VSTable sims={sims} />
         </Main>
         <footer
@@ -69,9 +55,8 @@ const Home: NextPage = ({
             padding: '0.5rem 2rem',
             display: 'flex',
             alignItems: 'flex-end',
-            position: 'absolute',
-            bottom: 0,
             width: '100%',
+            alignSelf: 'flex-end',
           }}
         >
           Veronica Shei Oxio Skills App

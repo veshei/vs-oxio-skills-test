@@ -8,10 +8,16 @@ import {
   IconButton,
   TableContainerProps,
   TablePagination,
+  Box,
+  TextField,
+  InputAdornment,
 } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { styled } from '@mui/system';
-import { useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
+import { debounce } from 'lodash';
+
 import { loadSims } from '../../api';
 
 interface VSTableProps {
@@ -50,9 +56,38 @@ export function VSTable(props: VSTableProps): JSX.Element {
     setPage(newPage);
   };
 
-  console.log(sims);
+  const debouncedSearch = useRef(
+    debounce(
+      async (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const data = await loadSims(1, 10, event.target.value);
+        setRow(data.data);
+      },
+      300
+    )
+  ).current;
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
+
   return (
     <>
+      <Box>
+        <TextField
+          label="ICCID or IMSI"
+          variant="outlined"
+          onChange={(event) => debouncedSearch(event)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
       <VSTableContainer>
         <Table>
           <TableHead>
@@ -89,10 +124,10 @@ export function VSTable(props: VSTableProps): JSX.Element {
         </Table>
       </VSTableContainer>
       <TablePagination
-        rowsPerPageOptions={[10]}
+        rowsPerPageOptions={[sims.meta.page.size]}
         component="div"
         count={sims.meta.page.total}
-        rowsPerPage={10}
+        rowsPerPage={sims.meta.page.size}
         page={page}
         onPageChange={handleChangePage}
         showFirstButton
