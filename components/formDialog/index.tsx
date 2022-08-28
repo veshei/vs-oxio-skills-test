@@ -82,7 +82,7 @@ export default function VSFormDialog(props: VSFormDialogProps): JSX.Element {
       };
       const res = await postBatch(batch);
       const sims = await loadSims();
-      postCallback(sims);
+      postCallback(sims, batchName);
       openCallback();
     }
   };

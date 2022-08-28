@@ -7,7 +7,6 @@ export default function Header(): JSX.Element {
     width: '100%',
     height: '4.5rem',
     borderBottom: '1px solid grey',
-    boxShadow: '0 2px 2px lightgrey',
     display: 'flex',
     alignItems: 'center',
     padding: '0rem 2rem',

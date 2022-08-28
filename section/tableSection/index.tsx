@@ -4,10 +4,14 @@ import {
   InputAdornment,
   BoxProps,
   Button,
+  Alert,
+  IconButton,
+  Collapse,
 } from '@mui/material';
 import { styled } from '@mui/system';
 import { ChangeEvent, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { loadSims } from '../../api';
 import VSFormDialog from '../../components/formDialog';
@@ -40,6 +44,17 @@ export default function TableSection(props: TableSectionProps): JSX.Element {
   const [openDialog, setOpenDialog] = useState(false);
   const [page, setPage] = useState(0);
   const [searchVal, setSearchVal] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [batchName, setBatchName] = useState('');
+
+  const Container = styled(Box)<BoxProps>({
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '2.5rem 5rem',
+  });
 
   const HeaderBox = styled(Box)<BoxProps>({
     width: '100%',
@@ -68,8 +83,10 @@ export default function TableSection(props: TableSectionProps): JSX.Element {
     setOpenDialog(!open);
   };
 
-  const postCallback = (d: any) => {
+  const postCallback = (d: any, batchName: string) => {
     setData(d);
+    setShowAlert(true);
+    setBatchName(batchName);
   };
 
   const handleChangePage = async (event: unknown, newPage: number) => {
@@ -80,36 +97,57 @@ export default function TableSection(props: TableSectionProps): JSX.Element {
 
   return (
     <>
-      <HeaderBox>
-        <TextField
-          key="search-sims-field"
-          label="ICCID or IMSI"
-          variant="outlined"
-          onChange={(event) => onSearch(event)}
-          value={searchVal}
-          autoFocus
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <Button
-          variant="contained"
-          onClick={onAddSimsClick}
-          key="add-sim-button"
+      <Collapse in={showAlert}>
+        <Alert
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setShowAlert(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+          sx={{ mb: 2 }}
         >
-          Add SIMs
-        </Button>
-      </HeaderBox>
-      <VSTable sims={data} handleChangePage={handleChangePage} page={page} />
-      <VSFormDialog
-        open={openDialog}
-        openCallback={openDialogCallback}
-        postCallback={postCallback}
-      />
+          {`${batchName} was successfully created!`}
+        </Alert>
+      </Collapse>
+      <Container>
+        <HeaderBox>
+          <TextField
+            key="search-sims-field"
+            label="ICCID or IMSI"
+            variant="outlined"
+            onChange={(event) => onSearch(event)}
+            value={searchVal}
+            autoFocus
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Button
+            variant="contained"
+            onClick={onAddSimsClick}
+            key="add-sim-button"
+          >
+            Add SIMs
+          </Button>
+        </HeaderBox>
+        <VSTable sims={data} handleChangePage={handleChangePage} page={page} />
+        <VSFormDialog
+          open={openDialog}
+          openCallback={openDialogCallback}
+          postCallback={postCallback}
+        />
+      </Container>
     </>
   );
 }

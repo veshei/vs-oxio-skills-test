@@ -30,7 +30,6 @@ const Home: NextPage = ({
   const Main = styled(Grid)<GridProps>({
     backgroundColor: 'white',
     width: '100%',
-    padding: '2.5rem 5rem',
     maxWidth: '1440px',
     margin: '0 auto',
     display: 'flex',
