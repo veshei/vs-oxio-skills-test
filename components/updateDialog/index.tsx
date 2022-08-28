@@ -10,7 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
-import { loadSims, postBatch, updateSIM } from '../../api';
+import { loadSims, updateSIM } from '../../api';
 
 interface VSUpdateDialogProps {
   open: boolean;

@@ -5,14 +5,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  IconButton,
   TableContainerProps,
   TablePagination,
+  Button,
 } from '@mui/material';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { styled } from '@mui/system';
 import { useEffect, useState } from 'react';
-import PopUpMenu from '../popUpMenu';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface VSTableProps {
   sims: {
@@ -40,8 +39,6 @@ interface VSTableProps {
 export default function VSTable(props: VSTableProps): JSX.Element {
   const { sims, handleChangePage, page, openUpdateDialogCallback } = props;
   const [data, setData] = useState(sims);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const openMenu = Boolean(anchorEl);
 
   const VSTableContainer = styled(TableContainer)<TableContainerProps>({
     backgroundColor: 'white',
@@ -54,8 +51,7 @@ export default function VSTable(props: VSTableProps): JSX.Element {
     }
   }, [sims]);
 
-  const handleIconButtonClick = (event, row: any) => {
-    console.log(row);
+  const handleIconButtonClick = (event: any, row: any) => {
     openUpdateDialogCallback(row);
   };
 
@@ -87,13 +83,14 @@ export default function VSTable(props: VSTableProps): JSX.Element {
                     {row.isActive ? 'Active' : 'Inactive'}
                   </TableCell>
                   <TableCell>
-                    <IconButton
-                      id={`icon-button-${row.id}`}
+                    <Button
+                      variant="outlined"
                       onClick={(event) => handleIconButtonClick(event, row)}
-                      color="default"
+                      key={`icon-button-${row.id}`}
+                      endIcon={<EditIcon />}
                     >
-                      <MoreHorizIcon />
-                    </IconButton>
+                      Update SIM
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
