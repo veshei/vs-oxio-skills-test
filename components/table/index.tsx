@@ -12,6 +12,7 @@ import {
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { styled } from '@mui/system';
 import { useEffect, useState } from 'react';
+import PopUpMenu from '../popUpMenu';
 
 interface VSTableProps {
   sims: {
@@ -34,10 +35,13 @@ interface VSTableProps {
   };
   handleChangePage: any;
   page: number;
+  openUpdateDialogCallback: any;
 }
 export default function VSTable(props: VSTableProps): JSX.Element {
-  const { sims, handleChangePage, page } = props;
+  const { sims, handleChangePage, page, openUpdateDialogCallback } = props;
   const [data, setData] = useState(sims);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const openMenu = Boolean(anchorEl);
 
   const VSTableContainer = styled(TableContainer)<TableContainerProps>({
     backgroundColor: 'white',
@@ -49,6 +53,11 @@ export default function VSTable(props: VSTableProps): JSX.Element {
       setData(sims);
     }
   }, [sims]);
+
+  const handleIconButtonClick = (event, row: any) => {
+    console.log(row);
+    openUpdateDialogCallback(row);
+  };
 
   return (
     <>
@@ -78,7 +87,11 @@ export default function VSTable(props: VSTableProps): JSX.Element {
                     {row.isActive ? 'Active' : 'Inactive'}
                   </TableCell>
                   <TableCell>
-                    <IconButton color="default">
+                    <IconButton
+                      id={`icon-button-${row.id}`}
+                      onClick={(event) => handleIconButtonClick(event, row)}
+                      color="default"
+                    >
                       <MoreHorizIcon />
                     </IconButton>
                   </TableCell>

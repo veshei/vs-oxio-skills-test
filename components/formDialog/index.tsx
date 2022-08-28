@@ -89,7 +89,7 @@ export default function VSFormDialog(props: VSFormDialogProps): JSX.Element {
 
   return (
     <Dialog open={open} onClose={openCallback}>
-      <DialogTitle>Add Sims</DialogTitle>
+      <DialogTitle>Add SIMs</DialogTitle>
       <DialogContent>
         <TextField
           key="batch-name-field"
@@ -146,7 +146,7 @@ export default function VSFormDialog(props: VSFormDialogProps): JSX.Element {
           <FormControlLabel
             control={
               <Switch
-                value={active}
+                checked={active}
                 onChange={(event) => onSwitchChange(event)}
               />
             }

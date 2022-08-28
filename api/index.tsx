@@ -58,3 +58,23 @@ export async function postBatch(batch: {
   const data = await res.json();
   return data;
 }
+
+export async function updateSIM(sim: {
+  id: number;
+  imsi: string;
+  isActive: boolean;
+}) {
+  const res = await fetch(
+    `https://simulator-api.onrender.com/v1/sims/${sim.id}`,
+    {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(sim),
+    }
+  );
+  const data = await res.json();
+  return data;
+}

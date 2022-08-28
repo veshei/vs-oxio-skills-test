@@ -16,6 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { loadSims } from '../../api';
 import VSFormDialog from '../../components/formDialog';
 import VSTable from '../../components/table';
+import VSUpdateDialog from '../../components/updateDialog';
 
 interface TableSectionProps {
   sims: {
@@ -42,10 +43,13 @@ export default function TableSection(props: TableSectionProps): JSX.Element {
   const { sims } = props;
   const [data, setData] = useState(sims);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
   const [page, setPage] = useState(0);
   const [searchVal, setSearchVal] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [batchName, setBatchName] = useState('');
+  const [updateDialogRow, setUpdateDialogRow] = useState();
+  const [showUpdateAlert, setShowUpdateAlert] = useState(false);
 
   const Container = styled(Box)<BoxProps>({
     width: '100%',
@@ -89,6 +93,16 @@ export default function TableSection(props: TableSectionProps): JSX.Element {
     setBatchName(batchName);
   };
 
+  const openUpdateDialogCallback = (row: any) => {
+    setOpenUpdateDialog(!openUpdateDialog);
+    setUpdateDialogRow(row);
+  };
+
+  const postUpdateCallback = (d: any) => {
+    setData(d);
+    setShowUpdateAlert(true);
+  };
+
   const handleChangePage = async (event: unknown, newPage: number) => {
     const data = await loadSims(newPage + 1);
     setData(data);
@@ -116,6 +130,25 @@ export default function TableSection(props: TableSectionProps): JSX.Element {
           {`${batchName} was successfully created!`}
         </Alert>
       </Collapse>
+      <Collapse in={showUpdateAlert}>
+        <Alert
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setShowUpdateAlert(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+          sx={{ mb: 2 }}
+        >
+          SIM was successfully updated!
+        </Alert>
+      </Collapse>
       <Container>
         <HeaderBox>
           <TextField
@@ -141,11 +174,22 @@ export default function TableSection(props: TableSectionProps): JSX.Element {
             Add SIMs
           </Button>
         </HeaderBox>
-        <VSTable sims={data} handleChangePage={handleChangePage} page={page} />
+        <VSTable
+          sims={data}
+          handleChangePage={handleChangePage}
+          page={page}
+          openUpdateDialogCallback={openUpdateDialogCallback}
+        />
         <VSFormDialog
           open={openDialog}
           openCallback={openDialogCallback}
           postCallback={postCallback}
+        />
+        <VSUpdateDialog
+          open={openUpdateDialog}
+          openCallback={openUpdateDialogCallback}
+          postCallback={postUpdateCallback}
+          row={updateDialogRow}
         />
       </Container>
     </>
