@@ -32,7 +32,9 @@ For unit testing, I chose Jest because that is the testing library I am most fam
 next build
 ```
 
-The output can be found in the `.next` folder 2. Create a new instance in your Heroku account for this application
+The output can be found in the `.next` folder 
+
+2. Create a new instance in your Heroku account for this application
 
 3. Update package.json with this new field:
 
