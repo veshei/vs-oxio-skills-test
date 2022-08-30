@@ -45,12 +45,20 @@ export default function VSTable(props: VSTableProps): JSX.Element {
     width: '100%',
   });
 
+  /**
+   * Check for any data updates from parent component
+   */
   useEffect(() => {
     if (sims) {
       setData(sims);
     }
   }, [sims]);
 
+  /**
+   * Function to handle button click on 'Update SIMs' button
+   * @param event Event variable that comes default with button click
+   * @param row Identifying SIM information for that row
+   */
   const handleIconButtonClick = (event: any, row: any) => {
     openUpdateDialogCallback(row);
   };
@@ -58,7 +66,7 @@ export default function VSTable(props: VSTableProps): JSX.Element {
   return (
     <>
       <VSTableContainer>
-        <Table>
+        <Table data-testid="sims-table">
           <TableHead>
             <TableRow>
               <TableCell>ICCID</TableCell>
@@ -68,7 +76,7 @@ export default function VSTable(props: VSTableProps): JSX.Element {
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody data-testid="sims-table-body">
             {data &&
               data.data.map((row) => (
                 <TableRow key={row.id}>

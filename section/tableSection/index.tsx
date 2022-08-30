@@ -67,6 +67,11 @@ export default function TableSection(props: TableSectionProps): JSX.Element {
     justifyContent: 'space-between',
   });
 
+  /**
+   * On every text input, call API and update the returned SIMs data to
+   * reflect the new SIM values in the table
+   * @param event HTML input element of event
+   */
   const onSearch = async (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -79,30 +84,58 @@ export default function TableSection(props: TableSectionProps): JSX.Element {
     }
   };
 
+  /**
+   * Open Add New SIMs dialog
+   */
   const onAddSimsClick = () => {
     setOpenDialog(true);
   };
 
+  /**
+   * Callback function passed to form dialog child component to close dialog
+   */
   const openDialogCallback = () => {
     setOpenDialog(!open);
   };
 
+  /**
+   * Callback function that is called when new batch is submitted
+   * on <VSFormDialog />
+   * @param d SIMs data field
+   * @param batchName Name of batch to display in success alert
+   */
   const postCallback = (d: any, batchName: string) => {
     setData(d);
     setShowAlert(true);
     setBatchName(batchName);
   };
 
+  /**
+   * Callback function passed to table component to open update dialog
+   * with input fields filled in with correct information
+   * @param row SIM Data for that row in the table
+   */
   const openUpdateDialogCallback = (row: any) => {
     setOpenUpdateDialog(!openUpdateDialog);
     setUpdateDialogRow(row);
   };
 
+  /**
+   * Callback function that is triggered on 'Save' click in update dialog
+   * to update the data in this component and show success alert
+   * @param d SIMs data field
+   */
   const postUpdateCallback = (d: any) => {
     setData(d);
     setShowUpdateAlert(true);
   };
 
+  /**
+   * Callback function that updates the data displayed
+   * when next page button is clicked
+   * @param event Event function that comes from button click
+   * @param newPage Next page to go to
+   */
   const handleChangePage = async (event: unknown, newPage: number) => {
     const data = await loadSims(newPage + 1);
     setData(data);
@@ -152,6 +185,7 @@ export default function TableSection(props: TableSectionProps): JSX.Element {
       <Container>
         <HeaderBox>
           <TextField
+            role="search"
             key="search-sims-field"
             label="ICCID or IMSI"
             variant="outlined"
@@ -170,6 +204,7 @@ export default function TableSection(props: TableSectionProps): JSX.Element {
             variant="contained"
             onClick={onAddSimsClick}
             key="add-sim-button"
+            data-testid="add-sim-button"
           >
             Add SIMs
           </Button>

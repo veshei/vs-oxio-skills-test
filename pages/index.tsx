@@ -3,23 +3,20 @@ import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import Head from 'next/head';
 import Header from '../components/header';
 import { styled } from '@mui/system';
-import { loadBatches, loadSims } from '../api';
+import { loadSims } from '../api';
 import TableSection from '../section/tableSection';
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const sims = await loadSims();
-  const batches = await loadBatches();
   return {
     props: {
       sims,
-      batches,
     },
   };
 };
 
 const Home: NextPage = ({
   sims,
-  batches,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const VSGrid = styled(Grid)<GridProps>({
     backgroundColor: 'white',
@@ -43,10 +40,11 @@ const Home: NextPage = ({
       </Head>
       <VSGrid container>
         <Header />
-        <Main>
+        <Main role="main">
           <TableSection sims={sims} />
         </Main>
         <footer
+          role="contentinfo"
           style={{
             background: 'white',
             borderTop: '1px solid grey',

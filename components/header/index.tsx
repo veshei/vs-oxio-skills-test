@@ -12,7 +12,7 @@ export default function Header(): JSX.Element {
     padding: '0rem 2rem',
   });
   return (
-    <HeaderContainer role="heading">
+    <HeaderContainer role="banner">
       <Typography
         variant="body1"
         sx={{

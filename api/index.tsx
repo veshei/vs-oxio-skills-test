@@ -1,9 +1,15 @@
+/**
+ * API call to get the SIMs data for that page or for the filtered search result
+ * @param pageNumber
+ * @param pageSize
+ * @param filterSearch
+ * @returns SIMs data
+ */
 export async function loadSims(
   pageNumber = 1,
   pageSize = 10,
   filterSearch?: string
 ) {
-  // Call an external API endpoint to get sims
   let res;
   if (filterSearch) {
     res = await fetch(
@@ -19,6 +25,13 @@ export async function loadSims(
   return data;
 }
 
+/**
+ * API call to return the batches data for that page or for the filtered search results
+ * @param pageNumber
+ * @param pageSize
+ * @param filterSearch
+ * @returns Batches data
+ */
 export async function loadBatches(
   pageNumber = 1,
   pageSize = 10,
@@ -40,6 +53,11 @@ export async function loadBatches(
   return data;
 }
 
+/**
+ * API call to POST a new batch
+ * @param batch
+ * @returns Response from POST call to add a new batch
+ */
 export async function postBatch(batch: {
   name: string;
   startIccid: string;
@@ -59,6 +77,11 @@ export async function postBatch(batch: {
   return data;
 }
 
+/**
+ * API call to update a SIM object
+ * @param sim
+ * @returns PUT response to update an individual SIM
+ */
 export async function updateSIM(sim: {
   id: number;
   imsi: string;

@@ -39,12 +39,20 @@ export default function VSUpdateDialog(
     }
   }, [row]);
 
+  /**
+   * Set IMSI state field to event value on change
+   * @param event HTML input element event
+   */
   const onIMSIChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setIMSI(event.target.value);
   };
 
+  /**
+   * Set IMSI to state variable and do length validation of IMSI
+   * @param event HTML input element
+   */
   const onIMSIBlur = (
     event: FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) => {
@@ -52,10 +60,18 @@ export default function VSUpdateDialog(
     setIMSIError(event.target.value.length !== 15);
   };
 
+  /**
+   * Set active field to state variable
+   * @param event HTML input change event
+   */
   const onSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setActive(event.target.checked);
   };
 
+  /**
+   * On save click, check for validation errors, if no errors then
+   * update SIM to new information, update data field in parent, and close dialog
+   */
   const onSaveClick = async () => {
     if (!imsiError) {
       const sim = {

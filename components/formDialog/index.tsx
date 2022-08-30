@@ -30,6 +30,10 @@ export default function VSFormDialog(props: VSFormDialogProps): JSX.Element {
   const [countError, setCountError] = useState(false);
   const [active, setActive] = useState(false);
 
+  /**
+   * Function that sets the batch name to state variable on blur of Batch Name form field
+   * @param event HTML input element event field
+   */
   const onBatchNameBlur = (
     event: FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) => {
@@ -37,6 +41,10 @@ export default function VSFormDialog(props: VSFormDialogProps): JSX.Element {
     setBatchNameError(event.target.value === '');
   };
 
+  /**
+   * Function that performs validation on ICCID field and sets ICCID value to state variable
+   * @param event HTML input element event field
+   */
   const onICCIDBlur = (
     event: FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) => {
@@ -48,6 +56,10 @@ export default function VSFormDialog(props: VSFormDialogProps): JSX.Element {
     }
   };
 
+  /**
+   * Function that performs validation on IMSI field and sets IMSI value to state variable
+   * @param event HTML input element event field
+   */
   const onIMSIBlur = (
     event: FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) => {
@@ -55,6 +67,10 @@ export default function VSFormDialog(props: VSFormDialogProps): JSX.Element {
     setIMSIError(event.target.value.length !== 15);
   };
 
+  /**
+   * Function that performs validation on cpimt field and sets count value to state variable
+   * @param event HTML input element event field
+   */
   const onCountBlur = (
     event: FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) => {
@@ -67,10 +83,18 @@ export default function VSFormDialog(props: VSFormDialogProps): JSX.Element {
     }
   };
 
+  /**
+   * Function that sets active value to state variable
+   * @param event HTML input element event field
+   */
   const onSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setActive(event.target.checked);
   };
 
+  /**
+   * When submit button is clicked, check if all inputs are valid,
+   * POST to API, update SIMs state of parent, and close dialog
+   */
   const onSubmitClick = async () => {
     if (!(batchNameError || iccidError || imsiError || countError)) {
       const batch = {
